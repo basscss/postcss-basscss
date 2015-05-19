@@ -1,0 +1,33 @@
+{
+  "name": "postcss-basscss",
+  "version": "1.0.0",
+  "description": "Postcss plugin for Basscss with conformance checking",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "keywords": [
+    "css",
+    "oocss",
+    "basscss",
+    "postcss"
+  ],
+  "author": "Brent Jackson",
+  "license": "MIT",
+  "dependencies": {
+    "basscss": "^6.1.4",
+    "basscss-base-reset": "^2.0.1",
+    "css-mixed-properties": "^1.1.0",
+    "cssstats": "^1.6.0",
+    "lodash": "^3.9.1",
+    "postcss": "^4.1.11",
+    "postcss-calc": "^4.0.1",
+    "postcss-color-function": "^1.2.0",
+    "postcss-custom-media": "^3.0.0",
+    "postcss-custom-properties": "^3.3.0",
+    "postcss-import": "^5.2.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  }
+}
