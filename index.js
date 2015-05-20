@@ -7,16 +7,20 @@ var customProperties = require('postcss-custom-properties');
 var calc = require('postcss-calc');
 var colorFunction = require('postcss-color-function');
 
-var mutations = require('./lib/mutations');
 var mixed = require('./lib/mixed-properties');
+var specificity = require('./lib/specificity');
+var mutations = require('./lib/mutations');
 
 module.exports = postcss.plugin('postcss-basscss', function(opts) {
 
   var opts = opts || {};
   opts = _.defaults(opts, {
     mutations: true,
-    mixedProperties: {
-      threshold: 7
+    specificity: {
+      threshold: 30
+    },
+    mixed: {
+      threshold: 3
     },
     modules: {}
   });
@@ -40,8 +44,9 @@ module.exports = postcss.plugin('postcss-basscss', function(opts) {
       .process(basscssSource).root;
 
 
-    mutations(root, result);
-    mixed(root, result);
+    mixed(root, result, opts);
+    specificity(root, result, opts);
+    //mutations(root, result);
 
     root.append(basscss);
 
