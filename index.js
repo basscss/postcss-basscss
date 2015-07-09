@@ -1,56 +1,55 @@
 
-var _ = require('lodash');
-var postcss = require('postcss');
-var atImport = require('postcss-import');
-var customMedia = require('postcss-custom-media');
-var customProperties = require('postcss-custom-properties');
-var calc = require('postcss-calc');
-var colorFunction = require('postcss-color-function');
+var _defaults = require('lodash').defaults
+var postcss = require('postcss')
+var atImport = require('postcss-import')
+var customMedia = require('postcss-custom-media')
+var customProperties = require('postcss-custom-properties')
+var calc = require('postcss-calc')
+var colorFunction = require('postcss-color-function')
+var bassmods = require('basscss').modules
 
-var mixed = require('./lib/mixed-properties');
-var specificity = require('./lib/specificity');
-var mutations = require('./lib/mutations');
+module.exports = postcss.plugin('postcss-basscss', function (opts) {
 
-module.exports = postcss.plugin('postcss-basscss', function(opts) {
+  var bassmodsObj = {}
+  bassmods.forEach(function (key) {
+    bassmodsObj[key] = true
+  })
 
-  var opts = opts || {};
-  opts = _.defaults(opts, {
-    mutations: true,
-    specificity: {
-      threshold: 30
-    },
-    mixed: {
-      threshold: 3
-    },
-    modules: {}
-  });
+  opts = opts || {}
+  opts = _defaults(opts, {
+    modules: bassmodsObj,
+    import: {},
+    customMedia: {},
+    customProperties: {},
+    calc: {},
+    colorFunction: {}
+  })
 
-  var basscssSource = [
-    '@import "basscss-base-reset";',
-  ].join('\n');
+  var basscssSource = []
+
+  Object.keys(opts.modules).forEach(function (key) {
+    if (opts.modules[key]) {
+      basscssSource.push('@import "' + key + '";')
+    }
+  })
 
   var processor = postcss([
-    atImport(),
-    customMedia(),
-    customProperties(),
-    calc(),
-    colorFunction()
-  ]);
+    atImport(opts.import),
+    customMedia(opts.customMedia),
+    customProperties(opts.customProperties),
+    calc(opts.calc),
+    colorFunction(opts.colorFunction)
+  ])
 
-
-  return function(root, result) {
+  return function (root, result) {
 
     var basscss = processor
-      .process(basscssSource).root;
+      .process(basscssSource.join('\n'))
+      .root
 
-
-    mixed(root, result, opts);
-    specificity(root, result, opts);
-    //mutations(root, result);
-
-    root.append(basscss);
+    root.append(basscss)
 
   }
 
-});
+})
 
