@@ -1,12 +1,10 @@
 {
   "name": "postcss-basscss",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Postcss plugin for Basscss",
   "main": "index.js",
   "scripts": {
-    "std": "standard",
-    "test": "mocha test",
-    "prepublish": "npm run std && npm test"
+    "test": "standard && mocha test"
   },
   "keywords": [
     "basscss",

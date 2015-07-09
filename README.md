@@ -21,4 +21,6 @@ var output = postcss()
 console.log(output)
 ```
 
+More features to come...
+
 MIT License

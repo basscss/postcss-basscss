@@ -24,7 +24,7 @@ describe('postcss-basscss', function () {
       results = processor
         .process(css)
         .css
-      console.log(results)
+      // console.log(results)
     })
   })
 
