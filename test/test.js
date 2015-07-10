@@ -3,7 +3,9 @@ var basscss = require('..')
 var postcss = require('postcss')
 var assert = require('assert')
 
-var processor = postcss([basscss()])
+var processor = postcss([basscss({
+  immutable: true
+})])
 
 var css = [
   '/* Please don’t write CSS like this */',
@@ -12,6 +14,7 @@ var css = [
   '.herp { height: 12px; display: block; color: tomato; }',
   '.brown { width: 100%; color: brown; }',
   '.red { color: red; }',
+  '.blue { color: green; }',
   '.derp { color: blue; }'
 ].join('\n')
 
@@ -24,7 +27,6 @@ describe('postcss-basscss', function () {
       results = processor
         .process(css)
         .css
-      // console.log(results)
     })
   })
 

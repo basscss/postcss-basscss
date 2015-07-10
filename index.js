@@ -6,6 +6,7 @@ var customMedia = require('postcss-custom-media')
 var customProperties = require('postcss-custom-properties')
 var calc = require('postcss-calc')
 var colorFunction = require('postcss-color-function')
+var removeMutations = require('postcss-remove-mutations')
 var bassmods = require('basscss').modules
 
 module.exports = postcss.plugin('postcss-basscss', function (opts) {
@@ -22,7 +23,8 @@ module.exports = postcss.plugin('postcss-basscss', function (opts) {
     customMedia: {},
     customProperties: {},
     calc: {},
-    colorFunction: {}
+    colorFunction: {},
+    immutable: true
   })
 
   var basscssSource = []
@@ -47,7 +49,17 @@ module.exports = postcss.plugin('postcss-basscss', function (opts) {
       .process(basscssSource.join('\n'))
       .root
 
-    root.append(basscss)
+    if (opts.immutable) {
+      root = postcss()
+        .use(removeMutations({
+          immutables: basscss
+        }))
+        .process(root)
+        .root
+        .append(basscss)
+    } else {
+      root.append(basscss)
+    }
 
   }
 

@@ -22,7 +22,8 @@
     "postcss-color-function": "^1.2.0",
     "postcss-custom-media": "^3.0.0",
     "postcss-custom-properties": "^3.3.0",
-    "postcss-import": "^5.2.2"
+    "postcss-import": "^5.2.2",
+    "postcss-remove-mutations": "^0.1.0"
   },
   "devDependencies": {
     "mocha": "^2.2.5",
@@ -30,8 +31,8 @@
   },
   "standard": {
     "globals": [
-      "it",
-      "describe"
+      "describe",
+      "it"
     ]
   }
 }
