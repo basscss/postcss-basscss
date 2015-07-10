@@ -25,6 +25,7 @@ module.exports = postcss.plugin('postcss-basscss', function (opts) {
     customProperties: {},
     calc: {},
     colorFunction: {},
+    raw: false,
     immutable: true,
     removeIds: true
   })
@@ -37,13 +38,15 @@ module.exports = postcss.plugin('postcss-basscss', function (opts) {
     }
   })
 
-  var processor = postcss([
-    atImport(opts.import),
-    customMedia(opts.customMedia),
-    customProperties(opts.customProperties),
-    calc(opts.calc),
-    colorFunction(opts.colorFunction)
-  ])
+  var processor = postcss([atImport(opts.import)])
+
+  if (!opts.raw) {
+    processor
+      .use(customMedia(opts.customMedia))
+      .use(customProperties(opts.customProperties))
+      .use(calc(opts.calc))
+      .use(colorFunction(opts.colorFunction))
+  }
 
   return function (root, result) {
 
@@ -67,7 +70,7 @@ module.exports = postcss.plugin('postcss-basscss', function (opts) {
         .root
     }
 
-    root.append(basscss)
+    root.prepend(basscss)
 
   }
 

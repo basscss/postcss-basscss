@@ -4,7 +4,6 @@ var postcss = require('postcss')
 var assert = require('assert')
 
 var processor = postcss([basscss({
-  immutable: true
 })])
 
 var css = [
