@@ -7,6 +7,7 @@ var customProperties = require('postcss-custom-properties')
 var calc = require('postcss-calc')
 var colorFunction = require('postcss-color-function')
 var removeMutations = require('postcss-remove-mutations')
+var removeIds = require('./lib/remove-ids')
 var bassmods = require('basscss').modules
 
 module.exports = postcss.plugin('postcss-basscss', function (opts) {
@@ -24,7 +25,8 @@ module.exports = postcss.plugin('postcss-basscss', function (opts) {
     customProperties: {},
     calc: {},
     colorFunction: {},
-    immutable: true
+    immutable: true,
+    removeIds: true
   })
 
   var basscssSource = []
@@ -56,10 +58,16 @@ module.exports = postcss.plugin('postcss-basscss', function (opts) {
         }))
         .process(root)
         .root
-        .append(basscss)
-    } else {
-      root.append(basscss)
     }
+
+    if (opts.removeIds) {
+      root = postcss()
+        .use(removeIds())
+        .process(root)
+        .root
+    }
+
+    root.append(basscss)
 
   }
 
