@@ -1,6 +1,6 @@
 {
   "name": "postcss-basscss",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Postcss plugin for Basscss",
   "main": "index.js",
   "scripts": {
